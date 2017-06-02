@@ -60,67 +60,6 @@ def getParamsFromFile(configFile, ConfigSection):
 
 # ---------------------------------------------------------------------------------
 
-def backupFile (fileName):
-
-    import os
-    import shutil
-    import datetime
-    FilePath = fileName
-    modifiedTime = os.path.getmtime(FilePath) 
-    
-    timeStamp =  datetime.datetime.fromtimestamp(modifiedTime).strftime("%b-%d-%y-%H:%M:%S")
-    timeStamp =  datetime.datetime.now().strftime("%b-%d-%y-%H:%M:%S")
-
-    newFilePath = "backups/"+FilePath+"_"+timeStamp
-    shutil.copyfile(FilePath,newFilePath)
-
-# ---------------------------------------------------------------------------------
-
-def writeParamsToFile(configFile, ConfigSection, configDict):
-
-    #print ("\nWriting new config file\n")
-    with open(configFile, 'w') as configFile:
-        conf = ConfigParser.ConfigParser()
-        conf.add_section("fitbit");
-        for key,value in configDict.items():
-            conf.set('fitbit', key, value)
-            #print("New option: key=" + key + "  value=" + value)
-        conf.write(configFile)
-    
-# ---------------------------------------------------------------------------------
-
-def urllib2BasicAuth(configDict):
-
-    headers = {
-        'Authorization': 'Basic %s' % configDict['basictoken'],
-        'Content-Type': 'application/x-www-form-urlencoded'
-    }
-    
-    data = urllib.urlencode({"grant_type":"refresh_token","refresh_token":configDict['refreshtoken']})
-    
-    # Pass data to urlopen as param, rather than adding data to URL string (triggers POST instead of GET)
-    vprint ("headers for urlib2 call\n--------------------------\n%s\n\n" % headers)
-    vprint ("data for urllib2 call\n------------------------\n%s\n\n" % data)
-    req = urllib2.Request(refreshAPI, data, headers)
-
-    vprint ("\nMaking the refresh API call\n---------------------------------\n")
-    try:
-        resp = urllib2.urlopen(req)
-    except Exception, e:
-        import traceback
-        vprint('Generic Exception: \n------------------------\n%s\n\n' % str(traceback.format_exc()))
-        vprint("Basic error object\n------------------\n%s\n\n" % str(e))
-        vprint("Headers of error object\n------------------\n%s\n\n" % str(e.headers))
-        vprint("Content of error object\n------------------\n%s\n\n" % str(e.read()))
-    else:
-        vprint(resp.read())
-
-        # Get HTTP POST response.  It's a string, but looks like a dict.  Convert to a real dictionary
-        import ast
-        content=ast.literal_eval(resp.read())
-
-# ---------------------------------------------------------------------------------
-
 def sendPushover(token, user, message):
 
     import pycurl
@@ -142,7 +81,6 @@ def sendPushover(token, user, message):
     # and data to send in request body.
     c.setopt(c.POSTFIELDS, postfields)
 
-#    c.setopt(c.WRITEDATA, buffer)
     c.setopt(c.WRITEFUNCTION, buffer.write)
     c.perform()
     c.close()
@@ -155,39 +93,37 @@ def sendPushover(token, user, message):
 # ---------------------------------------------------------------------------------
 # ---------------------- Main -----------------------------------------------------
 # ---------------------------------------------------------------------------------
-
-# Get the data structure containing all the HTTP GET params
-import cgi
-form = cgi.FieldStorage()
-verbose = False
 log = False
+verbose = False
 
-# Check to see if we got called via command-line or HTTP GET
-if (form.keys() != []):
+import getpass
+import argparse
+ 
+# Parse command-line arguments (Create ArgumentParser object)
+# By default, program name (shown in 'help' function) will be the same as the name of this file
+# Program name either comes from sys.argv[0] (invocation of this program) or from prog= argument to ArgumentParser
+# epilog= argument will be display last in help usage (strips out newlines)
+parser = argparse.ArgumentParser(description='Queries DataDomain appliances for relevant capacity statistics')
+ 
+# Test for verbose
+parser.add_argument('-v', dest='verbose', action='store_true', help='verbose_mode')
+ 
+# Get the object returned by parse_args
+args = parser.parse_args()
+verbose = args.verbose;
+ 
+# Prints command-line params
+vprint(" ")
+vprint("Command Line Parameters")
+vprint("---------------------------")
+vprint("verbose = %s" % args.verbose)
+vprint(" ")
 
-    # Check for verbose flag
-    if (("verbose" in form) and (form['verbose'].value == 'true')):
-        verbose = True
-    # Check for log flag
-    if (("log" in form) and (form['log'].value == 'true')):
-        log = True
-
-    # Print a separator
-    vprint("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-
-    # Looks like we got called via HTTP GET, and have at least one key
-    vprint("Keys from CGI FieldStorage\n");
-    for key in form.keys():
-        vprint("  Key=%s  Value=%s\n" % (key, form[key].value))
-    vprint("\n");
-
-else:
-    # We didn't get any keys from HTTP GET, maybe we got called via command line ?
-    vprint ("Keys: No keys\n")
 
 # Read config params from the config file
 configDict = getParamsFromFile(configFile, ConfigSection)
 
+# Send PushOver message
 sendPushover(configDict['token'], configDict['user'], "Hi there, Chad")
 
 # --------------------------------------- End --------------------------------------------------------
