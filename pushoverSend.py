@@ -105,25 +105,28 @@ import argparse
 # epilog= argument will be display last in help usage (strips out newlines)
 parser = argparse.ArgumentParser(description='Queries DataDomain appliances for relevant capacity statistics')
  
-# Test for verbose
+# Test for verbose flag
 parser.add_argument('-v', dest='verbose', action='store_true', help='verbose_mode')
- 
+# Query for string 
+parser.add_argument('--message',  default="Well, Hi there, Chad !")
+
 # Get the object returned by parse_args
 args = parser.parse_args()
 verbose = args.verbose;
  
 # Prints command-line params
-vprint(" ")
-vprint("Command Line Parameters")
-vprint("---------------------------")
-vprint("verbose = %s" % args.verbose)
-vprint(" ")
+vprint("\n")
+vprint("Command Line Parameters\n")
+vprint("---------------------------\n")
+vprint("verbose = %s\n" % args.verbose)
+vprint("message = %s\n" % args.message)
+vprint("\n")
 
 
 # Read config params from the config file
 configDict = getParamsFromFile(configFile, ConfigSection)
 
 # Send PushOver message
-sendPushover(configDict['token'], configDict['user'], "Hi there, Chad")
+sendPushover(configDict['token'], configDict['user'], args.message)
 
 # --------------------------------------- End --------------------------------------------------------
