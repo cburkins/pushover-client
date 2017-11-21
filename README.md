@@ -71,7 +71,7 @@ Step 4a (Get your Secret key)
 1. Request your secret token
    * curl --form-string "email=[your-email-address]" --form-string "password=[pushover-acct-password]" https://api.pushover.net/1/users/login.json
 
-    {"status":1,"id":"<your-user-key>","secret":"<secret-token>","request":"<request-id>"}
+        {"status":1,"id":"<your-user-key>","secret":"<secret-token>","request":"<request-id>"}
 
 
 Step 4b (Create your Desktop app and get your device_id)
