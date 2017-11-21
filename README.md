@@ -61,14 +61,50 @@ user = aakdgThisisaFakeUseradksVaS
 ```
 5. Enjoy the sound of notification on your phone
 
+Step 4 (Receive notifications on CLI)
+===============
+1. Go back to your Pushover dashboard (https://pushover.net/)
+1. In "Your Devices" section, click "Add Phone, Tablet, or Desktop", then click "Pushover for Deskto" (or just click https://pushover.net/clients/desktop)
+  * Device Name: homeauto
+  * Click "Register Web Browser"
+1. This next part needs to be done once, and can only be done via the command-line
+1. Login to a Linux box
+1. curl --form-string "email=<your-email-address>" --form-string "password=<pushover-acct-password>" https://api.pushover.net/1/users/login.json
+```
+{"status":1,"id":"<your-user-key-same-as-website>","secret":"<secret-token>","request":"<request-id>"}
+```
 
-The Listener (currently "pushoverListen.py") needs a configuration file called "pushoverListen.config" in the following format:
+curl --form-string "secret=<secret-token>" --form-string "name=<app-name>" --form-string "os=O" https://api.pushover.net/1/devices.json
+{"id":"<device-id>","status":1,"request":"<request-id>"}
 
+OK, whew !  You should now have these two items:
+1. Secret Key (we'll call this "secet")
+2. Device ID (we'll call this "device_id")
+
+
+Step 4c (configure your CLI listener)
+=========
+1. Log in to your linux box again
+2. Go back to same directory where you cloned this repository
+3. Create a file called "pushoverListen.config" in the following format (without the "<>" brackets, of course)
 ```
 [pushoverListen]
-secret=<super-long-secret-key>
+secret=<secret>
 device_id=<device-id>
 ```
 
-You need to create a new client of type "Open Client Desktop".  You can purchase this license for a one-time fee of $5, go to https://pushover.net/clients/desktop
+Step 4d (startup your listen - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
+==========
+1. That last part isn't really all that scary, just wanted you to know.
+2. It's just how the API works, no way around it
+3. OK, ready ?
+4. Run this command "./pushoverListener.py -v"
+5. It won't return your command-prompt, it's running in the shell foreground
+6. Every 30s or so, you should see "Received tickler"
+
+Step 4e (send a test message)
+=========
+1. You can send that test message however you want (easiest way is the website, I guess)
+2. That command-line listener in the previous step should have woken up, and showed you the message
+3. If you don't get the message with 5s, it's not coming
 
