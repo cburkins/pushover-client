@@ -34,7 +34,32 @@ Step 2 (email notification to your iPhone)
 
 Step 3 (CLI message from Windows to your iPhone)
 =============
-
+1. Login to your favorite Linux box
+2. Go to the Pushover website (https://pushover.net)
+2. At the top right, in big giant letter is "Your User Key". SAVE THIS (needed below, called "user")
+2. Scroll down to "Your Applications"
+2. Click on "Create an Application/API Token" (or click here: https://pushover.net/apps/build)
+  * Name: test01
+  * Type: Other
+  * Description: test cli pushover client
+  * URL: <blank>
+  * Icon: <none>
+  * <Click Create>
+2. Go back to your dashboard, click on  your new application
+2. In big giant letters, will tell you your new "API Token/Key".  SAVE THIS (needed below, called "token")
+2. 
+2. Clone this repository
+3. Create a file called "pushover.config" (use "user" and "token" from above)
+```
+[pushover]
+token = apadskSuperFakeTokendkgasd
+user = aakdgThisisaFakeUseradksVaS
+```
+4. Run this command
+```
+./pushoverSend.py -v --message "Now is the time for all good men to come to the aid of their country"
+```
+5. Enjoy the sound of notification on your phone
 
 
 The Listener (currently "pushoverListen.py") needs a configuration file called "pushoverListen.config" in the following format:
