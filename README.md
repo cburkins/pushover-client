@@ -69,7 +69,7 @@ Step 4a (Get your Secret key)
 1. This next part needs to be done once, and **can only be done via the command-line**
 1. Login to a Linux box
 1. Request your secret token
-   * curl --form-string "email=<your-email-address>" --form-string "password=<pushover-acct-password>" https://api.pushover.net/1/users/login.json
+   * curl --form-string "email=[your-email-address]" --form-string "password=[pushover-acct-password]" https://api.pushover.net/1/users/login.json
 ```
 {"status":1,"id":"<your-user-key>","secret":"<secret-token>","request":"<request-id>"}
 ```
@@ -78,7 +78,7 @@ Step 4b (Create your Desktop app and get your device_id)
 -------------------------------------
 1. Again, as the same Linux CLI
 2. Create your Desktop app, and get your secret key
-   * <code>curl --form-string "secret=<secret-token>" --form-string "name=<app-name>" --form-string "os=O" https://api.pushover.net/1/devices.json</code>
+   * <code>curl --form-string "secret=[secret-token]" --form-string "name=[app-name]" --form-string "os=O" https://api.pushover.net/1/devices.json</code>
 ```
 {"id":"<device-id>","status":1,"request":"<request-id>"}
 ```
