@@ -80,7 +80,8 @@ Step 4b (Create your Desktop app and get your device_id)
 -------------------------------------
 1. Again, as the same Linux CLI
 2. Create your Desktop app, and get your secret key
-   * <code>curl --form-string "secret=[secret-token]" --form-string "name=[app-name]" --form-string "os=O" https://api.pushover.net/1/devices.json</code>
+   * curl --form-string "secret=[secret-token]" --form-string "name=[app-name]" --form-string "os=O" https://api.pushover.net/1/devices.json
+
 ```
 {"id":"<device-id>","status":1,"request":"<request-id>"}
 ```
