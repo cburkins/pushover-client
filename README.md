@@ -35,7 +35,7 @@ Step 2 (email notification to your iPhone)
 3. Enjoy the sweet sound of the notification (and message) on your iPhone
 4. Didnt' work ? Keep working at it, no sense going on until you figured this out
 
-Step 3 (CLI message from Windows to your iPhone)
+Step 3 (CLI message from Linux CLI to your iPhone)
 --------
 1. Login to your favorite Linux box
 2. Go to the Pushover website (https://pushover.net)
@@ -64,8 +64,8 @@ user = aakdgThisisaFakeUseradksVaS
 ```
 5. Enjoy the sound of notification on your phone
 
-Step 4 (Receive notifications on CLI)
---------
+Step 4a (Get your Secret key)
+-----------------------------
 1. This next part needs to be done once, and **can only be done via the command-line**
 1. Login to a Linux box
 1. Request your secret token
@@ -74,16 +74,21 @@ Step 4 (Receive notifications on CLI)
 {"status":1,"id":"<your-user-key>","secret":"<secret-token>","request":"<request-id>"}
 ```
 
-curl --form-string "secret=<secret-token>" --form-string "name=<app-name>" --form-string "os=O" https://api.pushover.net/1/devices.json
+Step 4b (Create your Desktop app and get your device_id)
+-------------------------------------
+1. Again, as the same Linux CLI
+2. Create your Desktop app, and get your secret key
+   * <code>curl --form-string "secret=<secret-token>" --form-string "name=<app-name>" --form-string "os=O" https://api.pushover.net/1/devices.json</code>
+```
 {"id":"<device-id>","status":1,"request":"<request-id>"}
+```
 
 OK, whew !  You should now have these two items:
 1. Secret Key (we'll call this "secet")
 2. Device ID (we'll call this "device_id")
 
-
 Step 4c (configure your CLI listener)
---------
+-----------------------------
 1. Log in to your linux box again
 2. Go back to same directory where you cloned this repository
 3. Create a file called "pushoverListen.config" in the following format (without the "<>" brackets, of course)
