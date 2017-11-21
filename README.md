@@ -66,15 +66,12 @@ user = aakdgThisisaFakeUseradksVaS
 
 Step 4 (Receive notifications on CLI)
 --------
-1. Go back to your Pushover dashboard (https://pushover.net/)
-1. In "Your Devices" section, click "Add Phone, Tablet, or Desktop", then click "Pushover for Deskto" (or just click https://pushover.net/clients/desktop)
-  * Device Name: homeauto
-  * Click "Register Web Browser"
-1. This next part needs to be done once, and can only be done via the command-line
+1. This next part needs to be done once, and **can only be done via the command-line**
 1. Login to a Linux box
-1. curl --form-string "email=<your-email-address>" --form-string "password=<pushover-acct-password>" https://api.pushover.net/1/users/login.json
+1. Request your secret token
+   * curl --form-string "email=<your-email-address>" --form-string "password=<pushover-acct-password>" https://api.pushover.net/1/users/login.json
 ```
-{"status":1,"id":"<your-user-key-same-as-website>","secret":"<secret-token>","request":"<request-id>"}
+{"status":1,"id":"<your-user-key>","secret":"<secret-token>","request":"<request-id>"}
 ```
 
 curl --form-string "secret=<secret-token>" --form-string "name=<app-name>" --form-string "os=O" https://api.pushover.net/1/devices.json
