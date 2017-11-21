@@ -101,7 +101,7 @@ secret=<secret>
 device_id=<device-id>
 ```
 
-Step 4d (startup your listen - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
+Step 4d (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
 --------
 1. That last part isn't really all that scary, just wanted you to know.
 2. It's just how the API works, no way around it
