@@ -18,7 +18,7 @@ B. Purchase the Open Client Desktop license (costs $5)
 Installation & Configuration
 ==============================
 
-Step 0
+Step 0 (create your Pushover account)
 --------
 1. Create your account at the Pushover website
 
@@ -32,22 +32,22 @@ Step 2 (email notification to your iPhone)
 --------
 1. Go to your Pushover dashboard, and find your email address (which delivers to all your devices)
 2. Send a short email to that address
-3. Enjoy the sweet sound of the notification (and message) on your Iphone
-4. Didnt' work ? Keep working at it, no sense going on until you figure this out
+3. Enjoy the sweet sound of the notification (and message) on your iPhone
+4. Didnt' work ? Keep working at it, no sense going on until you figured this out
 
 Step 3 (CLI message from Windows to your iPhone)
 --------
 1. Login to your favorite Linux box
 2. Go to the Pushover website (https://pushover.net)
-2. At the top right, in big giant letter is "Your User Key". SAVE THIS (needed below, called "user")
+2. At the top right, in big giant letters is "Your User Key". SAVE THIS (needed below, called "user")
 2. Scroll down to "Your Applications"
 2. Click on "Create an Application/API Token" (or click here: https://pushover.net/apps/build)
-  * Name: test01
-  * Type: Other
-  * Description: test cli pushover client
-  * URL: <blank>
-  * Icon: <none>
-  * <Click Create>
+   * Name: test01
+   * Type: Other
+   * Description: test cli pushover client
+   * URL: <blank>
+   * Icon: <none>
+   * <Click Create>
 2. Go back to your dashboard, click on  your new application
 2. In big giant letters, will tell you your new "API Token/Key".  SAVE THIS (needed below, called "token")
 2. 
