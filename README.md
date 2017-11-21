@@ -15,25 +15,28 @@ Requirements:
 A. Install the iPhone app on your phone (might cost $5 ?)
 B. Purchase the Open Client Desktop license (costs $5)
 
+Installation & Configuration
+==============================
+
 Step 0
-========
+--------
 1. Create your account at the Pushover website
 
 Step 1 (install iPhone App)
-=========
+--------
 1. Install the iPhone App
 2. Login to your account 
 3. <There might be another step, but I did it back in 2012, so I can't remember the exact details.  Feel free to open an issue if you've got more detail here>
 
 Step 2 (email notification to your iPhone)
-=========
+--------
 1. Go to your Pushover dashboard, and find your email address (which delivers to all your devices)
 2. Send a short email to that address
 3. Enjoy the sweet sound of the notification (and message) on your Iphone
 4. Didnt' work ? Keep working at it, no sense going on until you figure this out
 
 Step 3 (CLI message from Windows to your iPhone)
-=============
+--------
 1. Login to your favorite Linux box
 2. Go to the Pushover website (https://pushover.net)
 2. At the top right, in big giant letter is "Your User Key". SAVE THIS (needed below, called "user")
@@ -62,7 +65,7 @@ user = aakdgThisisaFakeUseradksVaS
 5. Enjoy the sound of notification on your phone
 
 Step 4 (Receive notifications on CLI)
-===============
+--------
 1. Go back to your Pushover dashboard (https://pushover.net/)
 1. In "Your Devices" section, click "Add Phone, Tablet, or Desktop", then click "Pushover for Deskto" (or just click https://pushover.net/clients/desktop)
   * Device Name: homeauto
@@ -83,7 +86,7 @@ OK, whew !  You should now have these two items:
 
 
 Step 4c (configure your CLI listener)
-=========
+--------
 1. Log in to your linux box again
 2. Go back to same directory where you cloned this repository
 3. Create a file called "pushoverListen.config" in the following format (without the "<>" brackets, of course)
@@ -94,7 +97,7 @@ device_id=<device-id>
 ```
 
 Step 4d (startup your listen - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
-==========
+--------
 1. That last part isn't really all that scary, just wanted you to know.
 2. It's just how the API works, no way around it
 3. OK, ready ?
@@ -103,7 +106,7 @@ Step 4d (startup your listen - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAG
 6. Every 30s or so, you should see "Received tickler"
 
 Step 4e (send a test message)
-=========
+--------
 1. You can send that test message however you want (easiest way is the website, I guess)
 2. That command-line listener in the previous step should have woken up, and showed you the message
 3. If you don't get the message with 5s, it's not coming
