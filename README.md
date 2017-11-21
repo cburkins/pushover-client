@@ -3,7 +3,7 @@
 This is a work-in-progress.   The idea is that you receive a message that was sent via the [Pushover Service](https://pushover.net/).
 
 
-Here's the gist to get going:
+Here's the TL;DR of what I'll describe in detail below:
 ---------------------------------
 1. Download the Pushover client to your phone (good for trouble-shooting)
 2. Send a pushover message from the Pushover website, and receive it on your phone
