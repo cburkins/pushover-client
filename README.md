@@ -106,10 +106,10 @@ Step 4d (Install and Configure Python)
 ------------------------
 1. Use python 2.7 (check via 'python -V')
 1. (Optional) Create a virtual python environment
-   a. virtualenv venv --python=python2
-   a. source venv/bin/activate
+    1. virtualenv venv --python=python2
+    1. source venv/bin/activate
 1. Install pycurl
-   a. pip install pycurl
+    1. pip install pycurl
 
 
 Step 4e (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
