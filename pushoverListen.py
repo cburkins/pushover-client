@@ -94,17 +94,21 @@ def getPushoverMessages(configDict):
     
     # Extract message dictionary from returned buffer
     body = buffer.getvalue()
-    messageDict = json.loads(str(body))
-    return messageDict
+
+    # Convert string (containing JSON object) to Python Object
+    messageObject = json.loads(str(body))
+    return messageObject
 
 # ---------------------------------------------------------------------------------
 # Convert a Dictionary of messages over to one big string (within newlines between messages)
 
-def MessagesToString(messageDict):
+def MessagesToString(allMessageObject):
 
     StringList = [];
-    for messageObj in messageDict['messages']:
-        StringList.append("Id=%d: %s" % (messageObj['id'], messageObj['message']));
+
+    # There's a key in the Python object called "messages", within there's an array of messages
+    for singleMessageObj in allMessageObject['messages']:
+        StringList.append("Id=%d: message=%s title=%s" % (singleMessageObj['id'], singleMessageObj['message'], singleMessageObj['title']));
     # Join the list together into one big string separated by newlines
     return("\n".join(StringList) + "\n");
 
@@ -158,9 +162,6 @@ form = cgi.FieldStorage()
 verbose = False
 log = False
 
-
-
-
 import getpass
 import argparse
  
@@ -168,7 +169,7 @@ import argparse
 # By default, program name (shown in 'help' function) will be the same as the name of this file
 # Program name either comes from sys.argv[0] (invocation of this program) or from prog= argument to ArgumentParser
 # epilog= argument will be display last in help usage (strips out newlines)
-parser = argparse.ArgumentParser(description='Queries DataDomain appliances for relevant capacity statistics')
+parser = argparse.ArgumentParser(description='Listens to PushOver for new messages')
  
 # Test for verbose
 parser.add_argument('-v', dest='verbose', action='store_true', help='verbose_mode')
@@ -188,24 +189,24 @@ vprint(" ")
 configDict = getParamsFromFile(configFile, ConfigSection)
 
 # Find latest message
-messageDict = getPushoverMessages(configDict)
-lastIndex=len(messageDict['messages'])
+allMessageObject = getPushoverMessages(configDict)
+lastIndex=len(allMessageObject['messages'])
 
 # If there are pre-existing messages, print helpful info, then delete them
 if (lastIndex > 0):
-    vprint("Number of messages = %d\n" % lastIndex)
-    vprint (MessagesToString(messageDict));
-    lastMessageID = messageDict['messages'][lastIndex-1]['id']
+    vprint("Number of pre-existing messages = %d\n" % lastIndex)
+    vprint (MessagesToString(allMessageObject));
+    lastMessageID = allMessageObject['messages'][lastIndex-1]['id']
     vprint("Last message ID = %s\n" % lastMessageID)
-    vprint ("Deleting all messages\n")
+    vprint ("Deleting all pre-existing messages\n")
 
     # Delete all messages
     deleteAllMessages(configDict)
 
     # Print messages to be sure all got deleted
-    messageDict = getPushoverMessages(configDict)
-    vprint (MessagesToString(messageDict));
-    lastIndex=len(messageDict['messages'])
+    allMessageObject = getPushoverMessages(configDict)
+    vprint (MessagesToString(allMessageObject));
+    lastIndex=len(allMessageObject['messages'])
     vprint("Number of messages = %d\n" % lastIndex)
 
 # OK, we've cleared the PushOver message queue
@@ -219,12 +220,11 @@ import logging
 logging.basicConfig();
 
 def on_message(ws, message):
-    vprint ("Recived tickler: %s" % message);
+    vprint ("Recived tickler: %s\n" % message);
     if (message == "!"):
-        vprint ("We received a new message ! Retrieving it...")
-        messageDict = getPushoverMessages(configDict)
-        print(messageDict);
-        sys.stdout.write(MessagesToString(messageDict));
+        vprint ("We received a new message, retrieving it...\n")
+        messageObject = getPushoverMessages(configDict)
+        sys.stdout.write(MessagesToString(messageObject));
         sys.stdout.flush();
         deleteAllMessages(configDict)
 

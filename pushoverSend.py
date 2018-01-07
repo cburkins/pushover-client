@@ -60,7 +60,7 @@ def getParamsFromFile(configFile, ConfigSection):
 
 # ---------------------------------------------------------------------------------
 
-def sendPushover(token, user, message):
+def sendPushover(token, user, message, title):
 
     import pycurl
     from StringIO import StringIO
@@ -74,7 +74,7 @@ def sendPushover(token, user, message):
         'token': token, 
         'user': user, 
         'message': message,
-        'title': "This is the hard-coded title"
+        'title': title
     }
 
     # Form data must be provided already urlencoded.
@@ -111,7 +111,8 @@ parser = argparse.ArgumentParser(description='Queries DataDomain appliances for 
 # Test for verbose flag
 parser.add_argument('-v', dest='verbose', action='store_true', help='verbose_mode')
 # Query for string 
-parser.add_argument('--message',  default="Well, Hi there, Chad !")
+parser.add_argument('--message',  default="This is the default message")
+parser.add_argument('--title',  default="This is the default title")
 
 # Get the object returned by parse_args
 args = parser.parse_args()
@@ -123,6 +124,7 @@ vprint("Command Line Parameters\n")
 vprint("---------------------------\n")
 vprint("verbose = %s\n" % args.verbose)
 vprint("message = %s\n" % args.message)
+vprint("title = %s\n" % args.title)
 vprint("\n")
 
 
@@ -130,6 +132,6 @@ vprint("\n")
 configDict = getParamsFromFile(configFile, ConfigSection)
 
 # Send PushOver message
-sendPushover(configDict['token'], configDict['user'], args.message)
+sendPushover(configDict['token'], configDict['user'], args.message, args.title)
 
 # --------------------------------------- End --------------------------------------------------------

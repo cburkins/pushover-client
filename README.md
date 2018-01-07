@@ -108,8 +108,13 @@ Step 4d (Install and Configure Python)
 1. (Optional) Create a virtual python environment
     1. virtualenv venv --python=python2
     1. source venv/bin/activate
-1. Install pycurl
+1. Install pycurl  (which also needs unix command "curl" to be there)
     1. pip install pycurl
+    1. pip install websocket
+
+NOTE: Here's a bit of detail if you're using Cygwin and a virtualenv like me:
+1. export PYCURL_SSL_LIBRARY=openssl
+1. python venv/bin/pip install pycurl
 
 
 Step 4e (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
