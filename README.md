@@ -18,6 +18,7 @@ B. Purchase the Open Client Desktop license (costs $5)
 Installation & Configuration
 ==============================
 
+
 Step 0 (create your Pushover account)
 --------
 1. Create your account at the Pushover website
@@ -101,7 +102,17 @@ secret=<secret>
 device_id=<device-id>
 ```
 
-Step 4d (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
+Step 4d (Install and Configure Python)
+------------------------
+1. Use python 2.7 (check via 'python -V')
+1. (Optional) Create a virtual python environment
+   a. virtualenv venv --python=python2
+   a. source venv/bin/activate
+1. Install pycurl
+   a. pip install pycurl
+
+
+Step 4e (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESSAGES)
 --------
 1. That last part isn't really all that scary, just wanted you to know.
 2. It's just how the API works, no way around it
@@ -110,7 +121,7 @@ Step 4d (startup your listener - WARNING, THIS DELETES ALL YOUR OUTSTANDING MESS
 5. It won't return your command-prompt, it's running in the shell foreground
 6. Every 30s or so, you should see "Received tickler"
 
-Step 4e (send a test message)
+Step 4f (send a test message)
 --------
 1. You can send that test message however you want (easiest way is the website, I guess)
 2. That command-line listener in the previous step should have woken up, and showed you the message
