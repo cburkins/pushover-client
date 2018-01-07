@@ -70,9 +70,12 @@ def sendPushover(token, user, message):
     c = pycurl.Curl()
     c.setopt(c.URL, 'https://api.pushover.net/1/messages.json')
 
-    post_data = {'token': token, 
-                 'user': user, 
-                 'message': message}
+    post_data = {
+        'token': token, 
+        'user': user, 
+        'message': message,
+        'title': "This is the hard-coded title"
+    }
 
     # Form data must be provided already urlencoded.
     postfields = urlencode(post_data)

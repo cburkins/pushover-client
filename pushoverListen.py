@@ -223,6 +223,7 @@ def on_message(ws, message):
     if (message == "!"):
         vprint ("We received a new message ! Retrieving it...")
         messageDict = getPushoverMessages(configDict)
+        print(messageDict);
         sys.stdout.write(MessagesToString(messageDict));
         sys.stdout.flush();
         deleteAllMessages(configDict)
